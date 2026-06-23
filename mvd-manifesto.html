@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Minimum Viable Documentation Manifesto</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Georgia', serif;
+    background: #faf9f7;
+    color: #1a1a1a;
+    line-height: 1.8;
+  }
+  .container {
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 60px 24px 100px;
+  }
+  .tag-line {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #888;
+    margin-bottom: 20px;
+  }
+  h1 {
+    font-size: 2.4rem;
+    font-weight: 800;
+    line-height: 1.25;
+    margin-bottom: 16px;
+    color: #111;
+  }
+  .subtitle {
+    font-size: 1.25rem;
+    color: #444;
+    font-style: italic;
+    margin-bottom: 36px;
+    line-height: 1.5;
+  }
+  .divider {
+    border: none;
+    border-top: 2px solid #e8e8e8;
+    margin: 40px 0;
+  }
+  p {
+    font-size: 1.1rem;
+    margin-bottom: 22px;
+    color: #222;
+  }
+  h2 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin: 48px 0 16px;
+    color: #111;
+  }
+  h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin: 32px 0 12px;
+    color: #111;
+  }
+  strong { color: #111; }
+  em { color: #333; }
+  code {
+    background: #f0eeea;
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.92em;
+    color: #c0392b;
+  }
+  pre {
+    background: #1e1e2e;
+    color: #cdd6f4;
+    padding: 24px;
+    border-radius: 10px;
+    overflow-x: auto;
+    margin: 24px 0;
+    font-size: 0.92rem;
+    line-height: 1.7;
+  }
+  pre code {
+    background: none;
+    color: inherit;
+    padding: 0;
+    font-size: inherit;
+  }
+  .comment { color: #6c7086; }
+  .keyword { color: #cba6f7; }
+  .string { color: #a6e3a1; }
+  .func { color: #89b4fa; }
+  ul {
+    margin: 16px 0 22px 24px;
+  }
+  ul li {
+    font-size: 1.05rem;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  .pullquote {
+    border-left: 4px solid #111;
+    padding: 16px 24px;
+    margin: 36px 0;
+    background: #f5f4f0;
+    border-radius: 0 8px 8px 0;
+  }
+  .pullquote p {
+    font-size: 1.2rem;
+    font-style: italic;
+    color: #111;
+    margin: 0;
+  }
+  .golden-readme {
+    background: #fff8f0;
+    border: 2px solid #f39c12;
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin: 32px 0;
+  }
+  .golden-readme h4 {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #f39c12;
+    margin-bottom: 16px;
+  }
+  .golden-readme .question {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+  .golden-readme .q-num {
+    background: #f39c12;
+    color: white;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .golden-readme .q-text {
+    font-size: 1.05rem;
+    color: #333;
+    line-height: 1.6;
+  }
+  .framework-box {
+    background: #fff;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin: 32px 0;
+  }
+  .framework-box h4 {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #888;
+    margin-bottom: 16px;
+  }
+  .stat-row {
+    display: flex;
+    gap: 24px;
+    margin: 32px 0;
+  }
+  .stat-card {
+    flex: 1;
+    background: #fff;
+    border: 2px solid #e8e8e8;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+  }
+  .stat-card .number {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #111;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .stat-card .label {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 0.82rem;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .dash-box {
+    background: #fff0f0;
+    border: 2px solid #e74c3c;
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin: 28px 0;
+  }
+  .dash-box h4 {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #e74c3c;
+    margin-bottom: 12px;
+  }
+  .closing-line {
+    font-size: 1.3rem;
+    font-weight: 700;
+    text-align: center;
+    padding: 36px 0;
+    color: #111;
+    letter-spacing: -0.3px;
+    line-height: 1.6;
+  }
+  .footer-note {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 0.9rem;
+    color: #888;
+    font-style: italic;
+    margin-top: 8px;
+  }
+  @media (max-width: 600px) {
+    h1 { font-size: 1.8rem; }
+    .stat-row { flex-direction: column; }
+    .container { padding: 40px 18px 80px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="tag-line">Engineering · Documentation · Team Productivity</div>
+
+  <h1>The "Minimum Viable Documentation" Manifesto</h1>
+  <div class="subtitle">I Slashed My Team's Onboarding Time by 70% by Writing Less Documentation — Not More.</div>
+
+  <hr class="divider">
+
+  <p>The new engineer joined on a Monday. By Wednesday, she had read forty-seven internal documents. By Friday, she still didn't know how to run the project locally.</p>
+
+  <p>Every doc contradicted the one before it. One README said to use <code>docker-compose up</code>. Another said that command was deprecated. A third mentioned a setup script that no longer existed. A Confluence page titled "Getting Started — UPDATED Jan 2024" had a comment from March that said "this is wrong, see the new guide" with a link that returned a 404.</p>
+
+  <p>She came to me at the end of her first week and said, almost apologetically: "I think the docs might be... broken?"</p>
+
+  <p>They weren't broken. They were <em>worse</em> than broken. They were confidently, authoritatively, professionally wrong. And there were hundreds of them.</p>
+
+  <p><strong>I didn't assign someone to fix the docs. I declared war on them.</strong></p>
+
+  <hr class="divider">
+
+  <h2>The Documentation Debt Nobody Talks About</h2>
+
+  <p>Every engineering team talks about technical debt. Dead code, legacy systems, tangled dependencies — we have entire frameworks for managing these things. We have linters, static analysis, code reviews.</p>
+
+  <p>Nobody talks about <strong>documentation debt</strong>. And it's just as real, just as expensive, and dramatically harder to detect — because outdated documentation doesn't throw an error. It just misleads you quietly, confidently, in complete sentences.</p>
+
+  <p>Here's the paradox that kills teams: the more documentation you write, the more dangerous your docs become over time. Every new doc is a liability the moment the system it describes changes. And systems always change.</p>
+
+  <div class="pullquote"><p>Outdated documentation isn't neutral. It's actively worse than no documentation. A blank page tells you nothing. A wrong page sends you in the wrong direction for three hours.</p></div>
+
+  <p>We had a FinTech payments module with eleven separate documents explaining how the retry logic worked. Written at different times, by different engineers, for different audiences. No single document was complete. No two documents agreed. The system itself had been refactored twice since the oldest doc was written.</p>
+
+  <p>Every new engineer who touched that module spent an average of two days reading docs before they could do anything productive. And at the end of those two days, they understood the docs — not the system.</p>
+
+  <p>That's when I introduced what I now call the <strong>Minimum Viable Documentation (MVD) Manifesto.</strong></p>
+
+  <hr class="divider">
+
+  <h2>The Three Laws of MVD</h2>
+
+  <p>Before I tell you what we built, let me tell you the philosophy behind it. The MVD Manifesto runs on three laws that sound obvious but are almost universally violated in practice.</p>
+
+  <p><strong>Law 1: Documentation that isn't maintained is a bug, not a feature.</strong> Treat stale docs with the same urgency you'd treat broken tests. They're not "better than nothing." They're worse.</p>
+
+  <p><strong>Law 2: The only documentation that earns its existence is documentation that answers a question someone is actually asking.</strong> Not a question someone might ask. Not a question that seemed important when the doc was written. A real question, asked today, by a real person on your team.</p>
+
+  <p><strong>Law 3: If the code can say it, the code should say it.</strong> Docs that describe <em>what</em> the code does are always racing against the code and losing. Code that describes <em>why</em> it does something is irreplaceable.</p>
+
+  <p>These three laws led us to three concrete interventions.</p>
+
+  <hr class="divider">
+
+  <h2>Intervention 1: The Golden README</h2>
+
+  <p>We burned everything down to a single document per project. One file. One source of truth. We called it the <strong>Golden README</strong>.</p>
+
+  <p>The Golden README answers exactly three questions. Not four. Not two. Three.</p>
+
+  <div class="golden-readme">
+    <h4>⭐ The Golden README — Three Questions Only</h4>
+    <div class="question">
+      <div class="q-num">1</div>
+      <div class="q-text"><strong>"What is this?"</strong> — One paragraph. What does this service do, why does it exist, and what does it <em>not</em> do. If you can't explain it in a paragraph, the service might be the problem.</div>
+    </div>
+    <div class="question">
+      <div class="q-num">2</div>
+      <div class="q-text"><strong>"How do I run it locally?"</strong> — The exact commands, in order, copy-paste ready. No assumptions. No "you'll need to set up X first" without telling them how. If it takes more than five steps, the setup process might be the problem.</div>
+    </div>
+    <div class="question">
+      <div class="q-num">3</div>
+      <div class="q-text"><strong>"Where do I look when things break?"</strong> — Links to the monitoring dashboard, the on-call runbook, the most common failure modes. Not an explanation of every possible failure. Just: where do you start when it's 2 AM and something is on fire.</div>
+    </div>
+  </div>
+
+  <p>Everything else — architecture decisions, historical context, edge case explanations — lives either in the code itself, in ADRs (Architecture Decision Records) with explicit dates, or nowhere at all.</p>
+
+  <p>Here's what our Golden README template looks like:</p>
+
+<pre><code><span class="comment"># payments-retry-service</span>
+
+<span class="comment">## What is this?</span>
+Handles automatic retry logic for failed payment transactions.
+Sits between the payment gateway and our internal ledger.
+Does NOT handle refunds or disputes — see `refund-service` for that.
+
+<span class="comment">## Run it locally</span>
+<span class="string">cp .env.example .env</span>
+<span class="string">docker-compose up -d postgres redis</span>
+<span class="string">pip install -r requirements.txt</span>
+<span class="string">python main.py</span>
+<span class="comment"># Service runs on http://localhost:8001</span>
+
+<span class="comment">## When things break</span>
+- Logs: https://grafana.internal/payments-retry
+- Runbook: https://notion.so/payments-retry-runbook
+- On-call: #payments-oncall on Slack
+- Most common issue: Redis connection timeout → restart Redis container</code></pre>
+
+  <p>That's it. Thirty lines. Everything a new engineer needs to be dangerous in the first hour. Every word earns its place or it doesn't survive the next review.</p>
+
+  <p>The rule we enforced: <strong>if a question isn't answered by the Golden README and it's been asked twice, it gets added. If a section hasn't been referenced in six months, it gets deleted.</strong> The README is a living document with a strict diet.</p>
+
+  <hr class="divider">
+
+  <h2>Intervention 2: Code as Documentation</h2>
+
+  <p>The most durable documentation in any codebase isn't a README. It's a well-named function.</p>
+
+  <p>We introduced a PR review policy: <strong>no merge if the code requires a comment to explain what it's doing.</strong> That's a naming problem, not a documentation problem. Rename the function until the code explains itself.</p>
+
+  <p>The only comments we accepted were comments that explained <em>why</em> — the business reason, the edge case that burned someone in production, the constraint imposed by an upstream system that makes no sense but is real.</p>
+
+  <p>The difference looks like this:</p>
+
+<pre><code><span class="comment"># BAD: comment explains what (the code should do this itself)</span>
+<span class="comment"># multiply amount by 100 to convert to paise</span>
+<span class="func">def</span> process(amount):
+    <span class="keyword">return</span> amount * <span class="string">100</span>
+
+<span class="comment"># GOOD: function name explains what, comment explains why</span>
+<span class="func">def</span> convert_rupees_to_paise(amount):
+    <span class="comment"># RazorPay API requires amounts in smallest currency unit.</span>
+    <span class="comment"># Sending rupees directly causes silent truncation on their end.</span>
+    <span class="comment"># See: https://razorpay.com/docs/payments/amount-format</span>
+    <span class="keyword">return</span> amount * <span class="string">100</span></code></pre>
+
+  <p>The second version doesn't need a doc. It <em>is</em> a doc. Six months from now, when someone wonders why this multiplication is here, the answer is in the code — timestamped, version-controlled, and guaranteed to be in the right place.</p>
+
+  <p>We started rejecting PRs for documentation violations the same way we rejected them for failing tests. It felt harsh for the first two weeks. By the fourth week, the team's code was noticeably cleaner and the PR review conversations had shifted from "what does this do?" to "why did we make this tradeoff?"</p>
+
+  <p>That's the conversation you want your team having.</p>
+
+  <hr class="divider">
+
+  <h2>Intervention 3: The Deletion Dash</h2>
+
+  <p>This is the one people look at me funny about. Every month, we ran a one-day sprint with a single goal: <strong>delete as much documentation as possible.</strong></p>
+
+  <p>We called it the Deletion Dash. The rules were simple:</p>
+
+  <div class="dash-box">
+    <h4>🗑️ Deletion Dash — Rules</h4>
+    <ul style="margin-left:0; list-style:none;">
+      <li style="margin-bottom:10px;">📋 &nbsp;Any doc not updated in 6 months is a deletion candidate. Default is delete, not keep.</li>
+      <li style="margin-bottom:10px;">🔗 &nbsp;Any doc that duplicates information available in code or in another doc gets deleted.</li>
+      <li style="margin-bottom:10px;">❓ &nbsp;If you're unsure whether a doc is still accurate, you don't update it. You delete it and let someone recreate it from scratch if it's truly needed.</li>
+      <li style="margin-bottom:10px;">🏆 &nbsp;The engineer who deletes the most words wins. (Yes, we tracked it. Yes, it became competitive.)</li>
+    </ul>
+  </div>
+
+  <p>The first Deletion Dash was genuinely uncomfortable. Engineers kept saying things like "but what if someone needs this?" My answer every time: "If they need it, they'll create it. If they don't create it, they didn't need it."</p>
+
+  <p>In the first dash, we deleted over 60 documents and roughly 40,000 words of internal documentation. The Confluence space went from 200+ pages to 31. The wiki went from a maze to a map.</p>
+
+  <p>Nobody came back the next day asking where their doc had gone. Not a single person.</p>
+
+  <div class="pullquote"><p>The most revealing thing about the Deletion Dash isn't what gets deleted. It's that nobody notices. That silence is data. It tells you everything about which documentation was actually being read.</p></div>
+
+  <hr class="divider">
+
+  <h2>The Results — By the Numbers</h2>
+
+  <div class="stat-row">
+    <div class="stat-card">
+      <div class="number">3 wks</div>
+      <div class="label">Old onboarding time</div>
+    </div>
+    <div class="stat-card">
+      <div class="number">4 days</div>
+      <div class="label">New onboarding time</div>
+    </div>
+    <div class="stat-card">
+      <div class="number">70%</div>
+      <div class="label">Time reduction</div>
+    </div>
+  </div>
+
+  <p>Three weeks to four days. That's not a rounding error. That's an engineer going from theoretical to productive in less than a week instead of less than a month.</p>
+
+  <p>But the metric I'm proudest of isn't the onboarding time. It's this: <strong>engineers started voluntarily updating documentation.</strong> That had never happened before. When the docs are small enough to be maintainable and accurate enough to be trustworthy, people treat them like something worth maintaining. When docs are a sprawling graveyard of outdated information, nobody wants to touch them — and for good reason.</p>
+
+  <p>We also saw a drop in "documentation questions" in Slack — the messages that start with "hey, I read the doc but I'm confused about..." Those dropped by around 80% in the quarter after we implemented MVD. Not because people stopped having questions, but because the docs now actually answered the questions people were asking.</p>
+
+  <hr class="divider">
+
+  <h2>The Hardest Pushback I Got</h2>
+
+  <p>"But what about knowledge transfer? What happens when someone leaves?"</p>
+
+  <p>Fair question. Here's my answer: undocumented knowledge that lives in a person's head is dangerous. But that knowledge doesn't transfer to a doc that nobody reads. It transfers to a doc that someone actually opens, or to clean, self-explanatory code, or to a brief Slack thread that gets pinned in the right channel.</p>
+
+  <p>The engineers who leave your team aren't usually leaving behind knowledge gaps because they didn't write enough. They're leaving behind gaps because what they knew was tribal, context-dependent, and impossible to write down in a way that survives them. The answer to that isn't more documentation. It's better code, better architecture, and the discipline to keep the Golden README accurate.</p>
+
+  <p>One more pushback I hear: <strong>"This doesn't scale."</strong> Actually, bloated documentation is what doesn't scale. Every doc you add is a doc someone has to read, maintain, and eventually delete. The bigger your team gets, the more expensive your documentation sprawl becomes. MVD scales precisely because it demands that documentation shrink as the team grows, not expand.</p>
+
+  <hr class="divider">
+
+  <h2>The MVD Manifesto — In One Place</h2>
+
+  <div class="framework-box">
+    <h4>The Rules</h4>
+    <ul>
+      <li><strong>One Golden README per project.</strong> Answers exactly three questions. Nothing else.</li>
+      <li><strong>Code explains what. Comments explain why.</strong> Reject PRs that need comments to explain logic that should be in the function name.</li>
+      <li><strong>Delete first, add second.</strong> Before writing any new documentation, delete something first.</li>
+      <li><strong>Run a monthly Deletion Dash.</strong> Default is delete. The burden of proof is on the document to justify its existence.</li>
+      <li><strong>Docs have expiry dates.</strong> Every document gets a "last verified" date. Anything over six months old is a deletion candidate by default.</li>
+      <li><strong>If it's been asked twice, it goes in the README. If a README section hasn't been referenced in six months, it comes out.</strong></li>
+    </ul>
+  </div>
+
+  <hr class="divider">
+
+  <h2>What This Is Really About</h2>
+
+  <p>Documentation bloat is a symptom of a deeper problem: teams that confuse <em>writing</em> with <em>communicating</em>. Writing a document feels productive. It feels responsible. It feels like you're doing the right thing for the next engineer who has to understand your system.</p>
+
+  <p>But a document nobody reads is not communication. It's performance. It's the engineering equivalent of a meeting that should have been an email — except somehow worse, because it actively misleads the people who do try to engage with it.</p>
+
+  <p>The Minimum Viable Documentation Manifesto is, at its core, about <strong>respecting your reader's time</strong> more than your own desire to feel like you've documented something. It's harder to write thirty accurate lines than three hundred vague ones. Constraint forces clarity. Clarity builds trust. Trust means your team actually reads what you write.</p>
+
+  <p>And when your team actually reads what you write, something remarkable happens: documentation stops being a chore and starts being a tool.</p>
+
+  <div class="closing-line">
+    Write less.<br>Delete more.<br>Make every word earn its place.<br><br>
+    The best documentation you'll ever write<br>might be the documentation you choose not to write.
+  </div>
+
+  <hr class="divider">
+  <p class="footer-note">This is the second piece in my "Less Is More" engineering series. If you found this useful, you might also enjoy <em>The Anti-Refactor Doctrine</em> — how I saved 200+ hours by choosing not to rewrite a legacy system. Follow me for more writing on engineering decisions, FinTech systems, and the parts of software development nobody talks about enough.</p>
+  <p class="footer-note" style="margin-top:12px;"><strong>Tags:</strong> Software Engineering · Documentation · Engineering Management · Python · FinTech · Productivity · Tech</p>
+</div>
+</body>
+</html>
